@@ -1,11 +1,6 @@
 {
   "stocks": [
-    {"code": "002544", "name": "\u666e\u5929\u79d1\u6280"},
-    {"code": "600036", "name": "\u62db\u5546\u94f6\u884c"},
-    {"code": "603899", "name": "\u6668\u5149\u80a1\u4efd"},
-    {"code": "600879", "name": "\u822a\u5929\u7535\u5b50"},
-    {"code": "000002", "name": "\u4e07\u79d1 A"},
-    {"code": "510300", "name": "\u6caa\u6df1300ETF \u534e\u590f"},
-    {"code": "510330", "name": "\u6caa\u6df1300ETF \u534e\u6cf0\u67cf\u745e"}
+    {"code": "000001", "name": "平安银行"},
+    {"code": "600519", "name": "贵州茅台"}
   ]
 }

@@ -47,27 +47,33 @@ Create `~/.hermes/stock-watchlist.json` with your own stocks:
 ```json
 {
   "stocks": [
-    {"code": "000001", "name": "\u5e73\u5b89\u94f6\u884c"},
-    {"code": "600519", "name": "\u8d35\u5dde\u8305\u53f0"}
+    {"code": "000001", "name": "平安银行"},
+    {"code": "600519", "name": "贵州茅台"}
   ]
 }
 ```
 
 Or copy from `stock-watchlist.json.example` and edit.
 
-## \u547d\u4ee4
+## 命令
+
+### 方式一：无参数（读取 watchlist）
 
 ```bash
 python3 {baseDir}/scripts/stock_query.py
 ```
 
-## \u81ea\u52a8\u67e5\u8be2
+### 方式二：传入个股代码（直接查询）
 
-- **\u4ea4\u6613\u65e5 9:35** \u2014 \u65e9\u76d8\u67e5\u8be2
-- **\u4ea4\u6613\u65e5 13:35** \u2014 \u5348\u76d8\u67e5\u8be2
-- **\u975e\u4ea4\u6613\u65e5** \u2014 \u81ea\u52a8\u8df3\u8fc7\uff0c\u56de\u590d\u4f11\u5e02\u901a\u77e5
+```bash
+python3 {baseDir}/scripts/stock_query.py 000001 600519 002594
+```
 
-## \u8f93\u51fa\u683c\u5f0f
+- 支持后跟多个股票代码，自动去重
+- 如果代码在 watchlist 中有名称，优先显示 watchlist 名称
+- 不在 watchlist 中的代码会用 tushare 返回的名称兜底
+
+## 输出格式
 
 ```markdown
 📈 **股票行情报告**
