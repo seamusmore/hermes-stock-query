@@ -8,6 +8,7 @@
 import tushare as ts
 import json
 import os
+import sys
 from datetime import datetime
 
 # 从配置文件加载关注股票列表，优先 ~/.hermes/stock-watchlist.json，fallback 到本地配置
@@ -38,14 +39,29 @@ def load_watchlist():
 
 load_watchlist()
 
-def query_stocks():
-    """查询所有股票实时行情"""
-    df = ts.get_realtime_quotes(list(STOCKS.keys()))
+def query_stocks(codes=None):
+    """查询股票实时行情
+    Args:
+        codes: 传入的个股代码列表，为 None 时读取 watchlist
+    """
+    if codes is None:
+        codes = list(STOCKS.keys())
+    
+    # 去重并保持顺序
+    seen = set()
+    codes = [c for c in codes if not (c in seen or seen.add(c))]
+    
+    if not codes:
+        print("没有需要查询的股票代码")
+        return []
+    
+    df = ts.get_realtime_quotes(codes)
     
     results = []
     for _, row in df.iterrows():
         code = row['code']
-        name = STOCKS.get(code, row['name'])
+        # 优先从 watchlist 取名称，其次从 tushare 返回，最后兜底
+        name = STOCKS.get(code, row['name'] if row['name'] != '--' else code)
         price = float(row['price']) if row['price'] != '--' else 0
         pre_close = float(row['pre_close']) if row['pre_close'] != '--' else 0
         change = price - pre_close if pre_close > 0 else 0
@@ -107,7 +123,17 @@ def format_report(results):
     return "\n".join(lines)
 
 if __name__ == "__main__":
-    results = query_stocks()
+    # 支持命令行传入个股代码，比如：python3 stock_query.py 000001 600519
+    # 无参数时读取 watchlist
+    if len(sys.argv) > 1:
+        codes_from_args = sys.argv[1:]
+        results = query_stocks(codes=codes_from_args)
+    else:
+        results = query_stocks()
+    
+    if not results:
+        sys.exit(1)
+    
     report = format_report(results)
     print(report)
     
