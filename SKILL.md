@@ -38,31 +38,36 @@ git clone https://github.com/seamusmore/hermes-stock-query.git \
 pip3 install tushare --user
 ```
 
-## 命令
+## Configuration
+
+### Watchlist
+
+Create `~/.hermes/stock-watchlist.json` with your own stocks:
+
+```json
+{
+  "stocks": [
+    {"code": "000001", "name": "\u5e73\u5b89\u94f6\u884c"},
+    {"code": "600519", "name": "\u8d35\u5dde\u8305\u53f0"}
+  ]
+}
+```
+
+Or copy from `stock-watchlist.json.example` and edit.
+
+## \u547d\u4ee4
 
 ```bash
 python3 {baseDir}/scripts/stock_query.py
 ```
 
-## 关注股票
+## \u81ea\u52a8\u67e5\u8be2
 
-| 代码 | 名称 |
-|------|------|
-| 002544 | 普天科技 |
-| 600036 | 招商银行 |
-| 603899 | 晨光股份 |
-| 600879 | 航天电子 |
-| 000002 | 万科 A |
-| 510300 | 沪深300ETF 华夏 |
-| 510330 | 沪深300ETF 华泰柏瑞 |
+- **\u4ea4\u6613\u65e5 9:35** \u2014 \u65e9\u76d8\u67e5\u8be2
+- **\u4ea4\u6613\u65e5 13:35** \u2014 \u5348\u76d8\u67e5\u8be2
+- **\u975e\u4ea4\u6613\u65e5** \u2014 \u81ea\u52a8\u8df3\u8fc7\uff0c\u56de\u590d\u4f11\u5e02\u901a\u77e5
 
-## 自动查询
-
-- **交易日 9:35** — 早盘查询
-- **交易日 13:35** — 午盘查询
-- **非交易日** — 自动跳过，回复休市通知
-
-## 输出格式
+## \u8f93\u51fa\u683c\u5f0f
 
 ```markdown
 📈 **股票行情报告**

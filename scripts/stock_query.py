@@ -7,18 +7,36 @@
 
 import tushare as ts
 import json
+import os
 from datetime import datetime
 
-# 股票列表
-STOCKS = {
-    '002544': '普天科技',
-    '600036': '招商银行',
-    '603899': '晨光股份',
-    '600879': '航天电子',
-    '000002': '万科 A',
-    '510300': '沪深 300ETF 华夏',
-    '510330': '沪深 300ETF 华泰柏瑞'
-}
+# 从配置文件加载关注股票列表，优先 ~/.hermes/stock-watchlist.json，fallback 到本地配置
+STOCKS = {}
+
+def load_watchlist():
+    """加载关注股票列表"""
+    global STOCKS
+    
+    # 优先读取 ~/.hermes/stock-watchlist.json
+    hermes_watchlist = os.path.expanduser("~/.hermes/stock-watchlist.json")
+    local_watchlist = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../stock-watchlist.json")
+    
+    for path in [hermes_watchlist, local_watchlist]:
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    STOCKS = {item["code"]: item["name"] for item in data.get("stocks", [])}
+                    return
+            except Exception as e:
+                print(f"Warning: Failed to load watchlist from {path}: {e}")
+    
+    # 如果都没找到，使用默认示例（仅用于演示）
+    STOCKS = {
+        '000001': '平安银行',  # 示例，请在配置文件中替换为自己的关注列表
+    }
+
+load_watchlist()
 
 def query_stocks():
     """查询所有股票实时行情"""

@@ -27,7 +27,29 @@ git clone https://github.com/seamusmore/hermes-stock-query.git \
   ~/.hermes/skills/stock-query
 ```
 
-## Dependencies
+## Configuration
+
+### Watchlist
+
+Create `~/.hermes/stock-watchlist.json` with your own stocks:
+
+```json
+{
+  "stocks": [
+    {"code": "000001", "name": "\u5e73\u5b89\u94f6\u884c"},
+    {"code": "600519", "name": "\u8d35\u5dde\u8305\u53f0"}
+  ]
+}
+```
+
+Or copy from the example file:
+
+```bash
+cp stock-watchlist.json.example ~/.hermes/stock-watchlist.json
+# Then edit to replace with your own stocks
+```
+
+### Dependencies
 
 ```bash
 pip3 install tushare --user
@@ -46,28 +68,16 @@ python3 scripts/stock_query.py
 Skill name: `stock-query`
 
 Triggers:
-- "查一下股票"
-- "股票行情"
+- "\u67e5\u4e00\u4e0b\u80a1\u7968"
+- "\u80a1\u7968\u884c\u60c5"
 - "stock"
-- "行情"
-
-## Watchlist
-
-| Code | Name |
-|------|------|
-| 002544 | 普天科技 |
-| 600036 | 招商银行 |
-| 603899 | 晨光股份 |
-| 600879 | 航天电子 |
-| 000002 | 万科 A |
-| 510300 | 沪深300ETF 华夏 |
-| 510330 | 沪深300ETF 华泰柏瑞 |
+- "\u884c\u60c5"
 
 ## Cron Schedule
 
-- **Trading day 9:35** — Morning check
-- **Trading day 13:35** — Afternoon check
-- **Non-trading day** — Auto skip with holiday notice
+- **Trading day 9:35** \u2014 Morning check
+- **Trading day 13:35** \u2014 Afternoon check
+- **Non-trading day** \u2014 Auto skip with holiday notice
 
 ## License
 
