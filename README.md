@@ -1,11 +1,12 @@
 # stock-query
 
-A 股股票实时行情查询技能，使用 tushare 数据源（新浪财经）。支持 7 只关注股票，自动判断交易日。
+A 股股票实时行情查询技能，使用 tushare 数据源（新浪财经）。
 
 ## Features
 
 - A 股实时行情查询
-- 自动判断交易日/非交易日
+- 支持 watchlist 配置文件
+- 支持命令行直接传入个股代码
 - 涨跌比、表现最佳/最差分析
 - Markdown 格式化输出
 
@@ -36,8 +37,8 @@ Create `~/.hermes/stock-watchlist.json` with your own stocks:
 ```json
 {
   "stocks": [
-    {"code": "000001", "name": "\u5e73\u5b89\u94f6\u884c"},
-    {"code": "600519", "name": "\u8d35\u5dde\u8305\u53f0"}
+    {"code": "000001", "name": "平安银行"},
+    {"code": "600519", "name": "贵州茅台"}
   ]
 }
 ```
@@ -59,25 +60,31 @@ pip3 install tushare --user
 
 ### Script
 
+**方式一：无参数（读取 watchlist）**
+
 ```bash
 python3 scripts/stock_query.py
 ```
+
+**方式二：传入个股代码（直接查询）**
+
+```bash
+python3 scripts/stock_query.py 000001 600519 002594
+```
+
+- 支持后跟多个股票代码，自动去重
+- 如果代码在 watchlist 中有名称，优先显示 watchlist 名称
+- 不在 watchlist 中的代码会用 tushare 返回的名称兜底
 
 ### Hermes Skill
 
 Skill name: `stock-query`
 
 Triggers:
-- "\u67e5\u4e00\u4e0b\u80a1\u7968"
-- "\u80a1\u7968\u884c\u60c5"
+- "查一下股票"
+- "股票行情"
 - "stock"
-- "\u884c\u60c5"
-
-## Cron Schedule
-
-- **Trading day 9:35** \u2014 Morning check
-- **Trading day 13:35** \u2014 Afternoon check
-- **Non-trading day** \u2014 Auto skip with holiday notice
+- "行情"
 
 ## License
 
